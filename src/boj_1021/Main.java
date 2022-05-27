@@ -22,7 +22,6 @@ public class Main {
 		
 		for(int i = 0; i < M; i ++) {
 			int a = Integer.parseInt(st.nextToken());
-			int idx = d.indexOf(a);
 			
 			if(d.size()%2 == 0)
 				mid = d.size()/2-1;

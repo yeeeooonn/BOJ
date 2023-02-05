@@ -52,9 +52,7 @@ public class Main {
 						map[nr][nc] = '*'; // map 에 물부분 *저장
 						waterQ.offer(new int[] {nr,nc});
 					}
-					
 				}
-				
 			}
 			
 			//물 이동 후, 고슴도치 이동

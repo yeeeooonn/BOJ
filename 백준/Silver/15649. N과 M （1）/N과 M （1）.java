@@ -3,10 +3,12 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
+
 	static int N,M;
 	static int[] p ;
 	static int[] nums ;
 	static boolean [] visit;
+	static StringBuilder sb = new StringBuilder();
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -21,14 +23,15 @@ public class Main {
 			p[i] = i+1;
 		}
 		perm(0);
+		System.out.println(sb.toString());
 	}
 	
 	static void perm(int n) {
 		if(n == M) {
 			for (int i = 0; i < nums.length; i++) {
-				System.out.print(nums[i]+" ");
+				sb.append(nums[i]+" ");
 			}
-			System.out.println();
+			sb.append("\n");
 			return;
 		}
 		for (int i = 0; i < N; i++) {
@@ -39,6 +42,6 @@ public class Main {
 			perm(n+1);
 			nums[n] = 0;
 			visit[i] = false;
-		}
+		}	
 	}
 }

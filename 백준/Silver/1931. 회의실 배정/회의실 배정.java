@@ -1,40 +1,39 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args)throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-    
-        int N = Integer.parseInt(br.readLine());
-        int time[][] = new int[N][2];
-        StringTokenizer st;
-        
-        for(int i =0; i<N; i++) {
-            st = new StringTokenizer(br.readLine(), " ");
-            time[i][0] = Integer.parseInt(st.nextToken());
-            time[i][1] = Integer.parseInt(st.nextToken());
-        }
-
-        //끝나는 시간을 기준으로 정렬, 끝나는 시간이 같다면 시작하는 시간 오름차순 정렬
-        Arrays.sort(time, (arr1, arr2) -> {
-            if(arr1[1] == arr2[1])
-                return Integer.compare(arr1[0],arr2[0]);
-            return arr1[1]- arr2[1];
-        });
-        
-        int count = 0;
-        int end_time = 0;
-        for(int i =0; i < N; i++) {
-            if(end_time <= time[i][0]) {
-                count++;
-                end_time = time[i][1];
-            }
-        }
-        br.close();
-        bw.write(count+"");
-        bw.flush();
-        bw.close();
-
-    }
+	static int N;
+	static int[][] timeTable;
+	public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		N = Integer.parseInt(br.readLine());
+		timeTable = new int[N][2];
+		for (int i = 0; i < N; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			timeTable[i][0] = Integer.parseInt(st.nextToken());
+			timeTable[i][1] = Integer.parseInt(st.nextToken());
+		}
+		
+		//끝나는 시간기준으로 정렬
+		Arrays.sort(timeTable, (a,b)->{
+			if(a[1] == b[1])
+				return Integer.compare(a[0], b[0]);
+			else
+				return Integer.compare(a[1], b[1]);
+		});
+		
+		int count = 0;
+		int end_time = 0;
+		for (int i = 0; i < N; i++) {
+			//끝나는시간이 시작시간보다 같거나 작으면
+			if(end_time <= timeTable[i][0]) {
+				//카운트 올리고 끝나는시간을 바꿔준다
+				count++;
+				end_time = timeTable[i][1];
+			}
+		}
+		System.out.println(count);
+	}
 }

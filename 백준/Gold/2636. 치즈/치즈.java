@@ -34,18 +34,11 @@ public class Main {
 			}
 			//공기 2로 채우기
 			bfs(0,0);
-			//치즈가 있는 부분 주변탐색하고 2로바꾸기
+			//치즈가 있는 부분 주변탐색하고 3으로바꾸기
 			for (int i = 0; i < H; i++) {
 				for (int j = 0; j < W; j++) {
 					if(mapCopy[i][j] == 1)
 						melt(i,j);
-				}
-			}
-			//3으로 바뀐 부분 맵에서 0으로 바꿔주기
-			for (int i = 0; i < H; i++) {
-				for (int j = 0; j < W; j++) {
-					if(mapCopy[i][j] == 3)
-						map[i][j] = 0;
 				}
 			}
 			least = cheese; //마지막 치즈 변수 저장
@@ -90,8 +83,12 @@ public class Main {
 			if(mapCopy[nr][nc] == 2)
 				count++;
 		}
-		if(count>=1)
+		if(count>=1) {
+			//3으로 바뀐 부분 맵에서 0으로 바꿔주기
 			mapCopy[r][c] =3;
+			map[r][c] = 0;
+		}
+			
 	}
 	static boolean check(int nr, int nc) {
 		return nr>=0 && nc>=0 && nr<H && nc<W;

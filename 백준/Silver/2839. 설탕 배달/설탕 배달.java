@@ -1,31 +1,38 @@
-import java.io.IOException;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 
 public class Main {
-    public static void main (String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        
-        int N = Integer.parseInt(br.readLine()); //N:입력받는 수
-        int count = 0;// count: 봉지 개수
-        
-        while(true) {
-            if(N%5 ==0) { //5로 나누어 떨어질 때
-                bw.write(N/5+count+"");
-                break;
-            } else if(N<0){
-                bw.write("-1");
-                break;
-            }
-            N = N-3; //n에 3kg를 빼고 count를 늘려줌 -> 3kg 봉지를 하나 든 것과같다
-            count ++;
-        }
-        br.close();
-        bw.flush();
-        bw.close();        
-        
-    }
+	static int weight;
+	static int count5;
+	static int count3;
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		weight = Integer.parseInt(br.readLine());
+		
+		//5키로짜리 넣을 수 있을때까지 넣음
+		int copyWeight= weight;
+		while(count5 < copyWeight/5) {
+			weight = weight-5;
+			count5++;
+		}
+		
+		while(weight !=0) {
+			//3키로짜리 넣을 수 있을때까지 넣음
+			copyWeight= weight;
+			int i =0;
+			while(i < copyWeight/3) {
+				weight = weight-3;
+				count3++;
+				i++;
+			}
+			//무게 0안 되면 5추가
+			if(weight !=0) {
+				if(count5 == 0)
+					break;
+				weight = weight+5;
+				count5--;
+			}
+		}
+		System.out.println((weight==0) ? count3+count5 : -1);
+	}
 }

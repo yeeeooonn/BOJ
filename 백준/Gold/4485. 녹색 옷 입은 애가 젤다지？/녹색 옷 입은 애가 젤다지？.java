@@ -1,9 +1,9 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
-
+//우선순위 큐 사용
 public class Main {
 	static int N ;
 	static int count;
@@ -12,7 +12,7 @@ public class Main {
 	static int[][] distance; //비용 저장
 	static int[] dr = {-1,0,1,0}; //위 오 아 왼
 	static int[] dc = {0,1,0,-1};
-	static class Edge{
+	static class Edge implements Comparable<Edge>{
 		int r;
 		int c;
 		int w;
@@ -22,6 +22,11 @@ public class Main {
 			this.c = c;
 			this.w = w;
 		}
+		@Override
+		public int compareTo(Edge o) {
+			return Integer.compare(this.w, o.w);
+		}
+		
 	}
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -46,7 +51,7 @@ public class Main {
 			}
 			//시작
 			distance[0][0] = map[0][0];
-			Queue<Edge> q = new LinkedList<>();
+			PriorityQueue<Edge> q = new PriorityQueue<>();
 			q.offer(new Edge(0,0,map[0][0]));
 			while(!q.isEmpty()) {
 				Edge cur = q.poll();

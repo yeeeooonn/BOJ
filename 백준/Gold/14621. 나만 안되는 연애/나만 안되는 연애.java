@@ -1,96 +1,87 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-class Edge {
-	int start;
-	int end;
-	int weight;
-
-	Edge(int start, int end, int weight) {
-		this.start = start;
-		this.end = end;
-		this.weight = weight;
-	}
-}
-
 public class Main {
+	static int N,M;
+	static int[] sex;
 	static int[] parent;
-	static ArrayList<Edge> edgeList;
-
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	static class Edge implements Comparable<Edge>{
+		int s;
+		int e;
+		int w;
+		public Edge(int s, int e, int w) {
+			super();
+			this.s = s;
+			this.e = e;
+			this.w = w;
+		}
+		@Override
+		public int compareTo(Edge o) {
+			return Integer.compare(this.w, o.w);
+		}
+	}
+	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
-
-		char[] university = new char[N + 1];
-
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		sex = new int[N+1];
+		parent = new int[N + 1];
 		st = new StringTokenizer(br.readLine());
-		for (int i = 1; i <= N; i++) {
-			university[i] = st.nextToken().charAt(0);
+		for (int i = 1; i < N+1; i++) {
+			String s = st.nextToken();
+			if(s.charAt(0) == 'M') sex[i] = 1;
+			if(s.charAt(0) == 'W') sex[i] = 2;
 		}
-
-		edgeList = new ArrayList<>();
+		PriorityQueue<Edge> pq = new PriorityQueue<>();
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
-
-			int u = Integer.parseInt(st.nextToken());
-			int v = Integer.parseInt(st.nextToken());
-			int d = Integer.parseInt(st.nextToken());
-
-			edgeList.add(new Edge(u, v, d));
+			int start = Integer.parseInt(st.nextToken());
+			int end = Integer.parseInt(st.nextToken());
+			int weight = Integer.parseInt(st.nextToken());
+			pq.offer(new Edge(start,end,weight));
 		}
-
-		parent = new int[N + 1];
-		for (int i = 1; i <= N; i++) {
-			parent[i] = i;
-		}
-
-		//오름차순 정렬.
-		Collections.sort(edgeList, (e1, e2) -> e1.weight - e2.weight);
-
-		int cnt = 0, ans = 0;
-
-		// 크루스칼
-		for (int i = 0; i < edgeList.size(); i++) {
-			Edge edge = edgeList.get(i);
-
-			if (find(edge.start) != find(edge.end)) {
-				if (university[edge.start] != university[edge.end]) {
+		
+		
+		makeSet();
+		int min = 0;
+		int cnt = 0;
+		int size = pq.size();
+		for (int i = 0; i < size; i++) {
+			Edge edge = pq.poll();
+			if (sex[edge.s] != sex[edge.e]) {
+				if(union(edge.s,edge.e)) {
 					cnt++;
-					ans += edge.weight;
-
-					union(edge.start, edge.end);
+					min+= edge.w;
 				}
 			}
 		}
-		
-        if(cnt == N-1)
-            System.out.println(ans);
-        if(cnt != N-1)
-            System.out.println(-1);
-	}
 
-	public static int find(int x) {
-		if (x == parent[x]) {
-			return x;
-		}
+		if(cnt == N-1)
+			System.out.println(min);
+		if(cnt != N-1)
+			System.out.println(-1);
+    }
+	
 
+	static int find(int x) {
+		if (x == parent[x]) return x;
 		return parent[x] = find(parent[x]);
 	}
 
-	public static void union(int x, int y) {
+	static boolean union(int x, int y) {
 		x = find(x);
 		y = find(y);
-
-		if (x != y) {
-			parent[y] = x;
-		}
+		if(x == y) return false; //자기자신이 부모일때 X
+		parent[y] = x;
+		return true;
 	}
 
+	static void makeSet() {
+		for (int i = 1; i <= N; i++) {
+			parent[i] = i;
+		}
+	}
 }

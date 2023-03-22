@@ -50,6 +50,7 @@ public class Main {
 		int cnt = 0;
 		int size = pq.size();
 		for (int i = 0; i < size; i++) {
+            if(cnt == N-1) break;
 			Edge edge = pq.poll();
 			if (sex[edge.s] != sex[edge.e]) {
 				if(union(edge.s,edge.e)) {

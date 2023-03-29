@@ -3,7 +3,6 @@ import java.util.*;
 class Solution {
     static int n,m;
     static int[] nums;
-    static boolean[] visited;
     static int[] answer;
     public int[] solution(int[][] users, int[] emoticons) {
         n = users.length;
@@ -11,9 +10,7 @@ class Solution {
         
         //System.out.println(n+" "+m);
         nums = new int[m];
-        visited = new boolean[m];
         answer = new int[2];
-        
         
         perm(0, users, emoticons);
 
@@ -28,12 +25,9 @@ class Solution {
             return;
         }
         for(int i = 0; i <= 40; i+=10) {
-            if(visited[cnt]) continue;
-            visited[cnt] = true;
             nums[cnt] = i;
             perm(cnt+1, users, emoticons);
             nums[cnt] = 0;
-            visited[cnt] = false;
             
         }
     }

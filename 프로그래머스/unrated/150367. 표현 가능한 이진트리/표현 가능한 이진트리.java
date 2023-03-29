@@ -4,35 +4,46 @@ class Solution {
 
     public int[] solution(long[] numbers) {
         int[] res = new int[numbers.length];
-        for (int ind = 0; ind < numbers.length; ind++) {
+        for (int index = 0; index < numbers.length; index++) {
             result = 1;
-            long num = numbers[ind];
-            //2진법 변환한 target 배열 생성
-            //해당 수의 2진법 길이 계산
-            int len = (int)Math.floor(Math.log(num) / Math.log(2)) + 1;
-            //해당 수의 포화 이진트리 길이 계산
+            
+            //2진수로 변환
+            String str = Long.toBinaryString(numbers[index]);
+            long num = numbers[index];
+            
+            //2진법 변환한 target 배열 생성(포화이진트리만들어서 앞에 길이 비었으면 0(false) 넣어주기)
+            
+            //포화 이진트리 길이 계산
             int exp = 1;
             int treeLen = 0;
             while(true) {
                 treeLen = (int)Math.pow(2, exp++) - 1;
-                if (treeLen >= len) break;
+                if (treeLen >= str.length()) break;
             }
 
             target = new boolean[treeLen];
-            int i = treeLen - 1;
-            while(true) {
-                long div = num / 2;
-                long mod = num % 2;
-                num = div;
-                target[i--] = (mod == 1);
-                if (div == 1) {
-                    target[i] = true;
-                    break;
-                } else if (div == 0)
-                    break;
+
+            for(int i = 0; i < str.length(); i++) {
+                if(str.charAt(i) == '1') {
+                     target[treeLen-str.length()+i] = true;
+                }
             }
+            
+            
+//             int i = treeLen - 1;
+//             while(true) {
+//                 long div = num / 2;
+//                 long mod = num % 2;
+//                 num = div;
+//                 target[i--] = (mod == 1);
+//                 if (div == 1) {
+//                     target[i] = true;
+//                     break;
+//                 } else if (div == 0)
+//                     break;
+//             }
             solve(0, treeLen - 1, false);
-            res[ind] = result;
+            res[index] = result;
         }
         return res;
     }

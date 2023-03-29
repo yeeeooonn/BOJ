@@ -8,7 +8,6 @@ class Solution {
         n = users.length;
         m = emoticons.length;
         
-        //System.out.println(n+" "+m);
         nums = new int[m];
         answer = new int[2];
         

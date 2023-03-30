@@ -32,11 +32,9 @@ public class Main {
 
 	}
 	static void d(int cnt) {
-		if(flag) {
-			return;
-		}
+		
 		if(cnt == size) {
-			if(!flag) {
+			
 				StringBuilder sb = new StringBuilder();
 				for (int i = 0; i < 9; i++) {
 					for (int j = 0; j < 9; j++) {
@@ -45,77 +43,53 @@ public class Main {
 					sb.append("\n");
 				}
 				System.out.println(sb.toString());
-				flag = true;
-			}
-			return;
+				
+			
+			System.exit(0);
 		}
 		int cur[] = list.get(cnt);
 		int i = cur[0];
 		int j = cur[1];
 		
+		
+		boolean[] checkB = new boolean[10]; //1~9
+		checkRow(i,checkB);
+		checkCol(j,checkB);
+		checkRange(i,j,checkB);
 		for (int k = 1; k < 10; k++) {
-			checkNum = new boolean[10]; //1~9
-			checkRow(i);
-			checkCol(j);
-			checkRange(i,j);
-			if(checkNum[k]) continue;
+			
+			if(checkB[k]) continue;
 			map[i][j] = k;
 			d(cnt+1);
 			map[i][j] = 0;
 		}
 		return;
 	}
-	static void checkRange(int r, int c) {
-		if(r<3 && c<3) {
-			checkRec(0,0);
-		}
-		if(r<3 && c<6&& c>=3) {
-			checkRec(0,3);
-		}
-		if(r<3 && c>=6) {
-			checkRec(0,6);
-		}
-		if(r>=3 && r<6 && c<3) {
-			checkRec(3,0);
-		}
-		if(r>=3 && r<6 && c<6&& c>=3) {
-			checkRec(3,3);
-		}
-		if(r>=3 && r<6 && c>=6) {
-			checkRec(3,6);
-		}
-		if(r>=6 && c<3) {
-			checkRec(6,0);
-		}
-		if(r>=6 && c<6&& c>=3) {
-			checkRec(6,3);
-		}
-		if(r>=6 && c>=6) {
-			checkRec(6,6);
-		}
+	static void checkRange(int r, int c, boolean[] checkB) {
+		checkRec(r/3*3,c/3*3, checkB);
 	}
-	static void checkRec(int r, int c) {
+	static void checkRec(int r, int c, boolean[] checkB) {
 		for (int i = r; i < r+3; i++) {
 			for (int j = c; j < c+3; j++) {
 				if(map[i][j] != 0) {
-					checkNum[map[i][j]] = true;
+					checkB[map[i][j]] = true;
 				}
 			}
 		}
 		
 	}
-	static void checkCol(int c) {
+	static void checkCol(int c, boolean[] checkB) {
 		for (int i = 0; i < 9; i++) {
 			if(map[i][c] != 0) {
-				checkNum[map[i][c]] = true;
+				checkB[map[i][c]] = true;
 			}
 		}
 		
 	}
-	static void checkRow(int r) {
+	static void checkRow(int r, boolean[] checkB) {
 		for (int i = 0; i < 9; i++) {
 			if(map[r][i] != 0) {
-				checkNum[map[r][i]] = true;
+				checkB[map[r][i]] = true;
 			}
 		}
 		

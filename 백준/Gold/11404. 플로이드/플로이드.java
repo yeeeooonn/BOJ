@@ -26,9 +26,7 @@ public class Main {
 			int s = Integer.parseInt(st.nextToken());
 			int e = Integer.parseInt(st.nextToken());
 			int w = Integer.parseInt(st.nextToken());
-			if(dist[s][e] > w) {
-				dist[s][e] = w;
-			}
+			dist[s][e] = Math.min(dist[s][e], w);
 		}
 		
 		

@@ -3,102 +3,73 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int N,L;
-	static int[][] map;
+	static int N,X;
 	static int result;
+	static int[][] map1;
+	static int[][] map2;
 	static int acc;
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		result = 0;
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
-		L = Integer.parseInt(st.nextToken());
-		map = new int[N][N];
+		X = Integer.parseInt(st.nextToken());
+		map1 = new int[N][N];
+		map2 = new int[N][N];
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < N; j++) {
-				map[i][j] = Integer.parseInt(st.nextToken());
+				map1[i][j] = Integer.parseInt(st.nextToken());
+				map2[j][i] = map1[i][j]; 
 			}
 		}
 		
-		//행 탐색
-		for (int i = 0; i < N; i++) {
-			acc = 1;
-			go1(i,0,false); //행index, 열index, keep여부
-		}
-
 		
-		//열 탐색
 		for (int i = 0; i < N; i++) {
+			//행 탐색
 			acc = 1;
-			go2(0,i,false); //행index, 열index, keep여부
+			check(i,0,false,map1);
+			
+			//열 탐색
+			acc =1;
+			check(i,0,false,map2);
 		}
 		
 		System.out.println(result);
-	}
-	static void go1(int row, int cnt, boolean keep) {
-		if(keep==true) {
-			if(acc>=L) {
-				acc=0;
-				go1(row,cnt,false);
-				return;
-			}
-		}
-		if(cnt==N-1) {
-			if(keep==false) {
-				result++;
-			}
-			return;
-		}
 
-		//다음 거 높이 같을 때
-		if(map[row][cnt] == map[row][cnt+1]) {
-			acc++;
-			go1(row, cnt+1, keep);
-		}
-		
-		//다음 거 높이 낮을 때
-		if(map[row][cnt] == map[row][cnt+1]+1 && keep == false) {
-			acc =1;
-			go1(row, cnt+1, true); //일단 이동, 보류라는 의미로 keep=true;
-		}
-		
-		//다음 거 높이 높을 때
-		if(map[row][cnt] == map[row][cnt+1]-1) {
-			if(acc>=L) {
-				acc =1;
-				go1(row, cnt+1, keep);
-			}
-		}
 	}
-	
-	static void go2(int cnt, int col, boolean keep) {
-		if(keep==true) {
-			if(acc>=L) {
-				acc=0;
-				go2(cnt,col,false);
+	static void check(int row, int col, boolean flag,int[][]map) {
+		if(flag == true) {
+			if(acc>=X) {
+				acc = 0;
+				check(row,col,false,map);
 				return;
 			}
 		}
-		if(cnt==N-1) {
-			if(keep==false) {
+		if(col == N-1) {
+			if(flag == false) {
 				result++;
 			}
 			return;
 		}
-		if(map[cnt][col] == map[cnt+1][col]) {
+		
+		if(map[row][col] == map[row][col+1]) { //다음 높이가 내 높이랑 같은 경우
 			acc++;
-			go2(cnt+1, col, keep);
+			check(row,col+1,flag,map);
 		}
-		if(map[cnt][col] == map[cnt+1][col]+1 && keep == false) {
+		if(map[row][col] == map[row][col+1]+1 && flag == false) {//다음 높이가 나보다 1 낮은 경우
 			acc =1;
-			go2(cnt+1, col, true); 
+			check(row,col+1,true,map);
 		}
-		if(map[cnt][col] == map[cnt+1][col]-1) {
-			if(acc>=L) {
-				acc =1;
-				go2(cnt+1, col, keep);
+		
+		if(map[row][col] == map[row][col+1]-1) {//다음 높이가 나보다 1 높은 경우
+			if(acc>= X) {
+				acc = 1;
+				check(row,col+1,flag,map);
 			}
 		}
+		
 	}
 
 }

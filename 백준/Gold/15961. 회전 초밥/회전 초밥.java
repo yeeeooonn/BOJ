@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -8,7 +7,6 @@ public class Main {
 	static int[] sushi; //회전초밥 벨트에 놓인 번호(입력)
 	static int[] count; //몇번 초밥을 먹었는지
 	static int result;
-	static boolean isC;
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());

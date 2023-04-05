@@ -5,10 +5,12 @@ import java.util.Arrays;
 public class Main {
 	static boolean[][] palindrome;
 	static int[] dp;
+	static char[] arr;
 	static int size;
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String str = br.readLine();
+		arr = str.toCharArray();
 		size = str.length();
 		
 		palindrome = new boolean[size+1][size+1];
@@ -22,7 +24,7 @@ public class Main {
 				int to = j-1;
 				
 				while(from<=to) {
-					if(str.charAt(from++) != str.charAt(to--)) {
+					if(arr[from++] != arr[to--]) {
 						isSame = false;
 						break;
 					}

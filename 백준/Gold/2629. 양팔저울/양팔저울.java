@@ -16,13 +16,13 @@ public class Main {
 			weight[i] = Integer.parseInt(st.nextToken());
 		}
 		
-		dp = new boolean[N+1][40001];
+		dp = new boolean[N+1][15001];
 		//초깃값 설정
 		dp[1][weight[1]] = true;
 			
 		for (int i = 2; i < N+1; i++) {
 			dp[i][weight[i]] = true;
-			for (int j = 0; j < 40001; j++) {
+			for (int j = 0; j < 15001; j++) {
 				if(dp[i-1][j]) { //이전 값이 true일 때
 					//그 값 , 그값-내값, 그값+내값 true
 					dp[i][j] = true;
@@ -37,6 +37,10 @@ public class Main {
 		st = new StringTokenizer(br.readLine());
 		for (int i = 0; i < M; i++) {
 			int biz = Integer.parseInt(st.nextToken());
+            if(biz>15001) {
+                sb.append("N ");
+                continue;
+            }
 			if(dp[N][biz]) {
 				sb.append("Y ");
 			}

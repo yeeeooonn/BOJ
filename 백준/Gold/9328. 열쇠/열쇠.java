@@ -67,7 +67,7 @@ public class Main {
 			
 			while(isD) {
 				isD = false;
-				
+				visited = new boolean[H][W];
 				for (int i = 0; i < list.size(); i++) {
 					bfs(list.get(i).x,list.get(i).y);
 				}
@@ -82,7 +82,6 @@ public class Main {
 
 	}
 	static void bfs(int x, int y) {
-		visited = new boolean[H][W];
 		Queue<P> q = new LinkedList<>();
 		q.offer(new P(x,y));
 		visited[x][y] = true;

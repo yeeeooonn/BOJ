@@ -8,6 +8,7 @@ public class Main {
 	static Coin[] coins;
 	static boolean[] money; //dp배열
 	static int sum;
+	static int half;
 	static class Coin {
 		int price;
 		int count;
@@ -38,22 +39,24 @@ public class Main {
 				continue;
 			}
 			
-			money = new boolean[50001];
+			half = sum/2;
+			
+			money = new boolean[half+1];
 			money[0] = true; //0은 무조건 가능
 			for (int i = 0; i < N; i++) {
 				int p = coins[i].price;
 				int c = coins[i].count;
 				
-				for (int j = sum/2; j >= p; j--) { //끝부터 탐색 (dp배열이 달라지므로)
+				for (int j = half; j >= p; j--) { //끝부터 탐색 (dp배열이 달라지므로)
 					if(money[j-p]) {
-						for (int k = 0; k < c && j+k*p<=50000; k++) { //c개만큼, dp배열 범위 벗어나지 않는 한에서
+						for (int k = 0; k < c && j+k*p<=half; k++) { //c개만큼, dp배열 범위 벗어나지 않는 한에서
 							money[j+k*p] = true;
 						}
 					}
 				}
 
 			}
-			if(money[sum/2]) {
+			if(money[half]) {
 				sb.append(1).append("\n");
 			}else {
 				sb.append(0).append("\n");

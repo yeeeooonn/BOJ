@@ -76,24 +76,25 @@ public class Main {
         int calc = 1;
         calcs = new int[N];
         calcs = Arrays.copyOf(permNums,N);
-        list = new ArrayList<>();
+        list = new ArrayList<>(); //곱할수들 저장할 리스트
 
 
         //더하기 먼저 계산
         for (int i = 0; i < N-1; i++) {
             if(isPlus[i]) {
                 calcs[i+1] = calcs[i] = calcs[i] + calcs[i+1];
-                if( (i == N-2) || (i != N-2 && !isPlus[i+1])) {
+                //끝이거나 끝이아닌데 다음연산이 x 이면 리스트에 넣어줌
+                if((i == N-2) || (i != N-2 && !isPlus[i+1])) {
                     list.add(calcs[i]);
                 }
             }
-            if(!isPlus[i]) {
-                if(i != 0 && isPlus[i-1]) continue;
-                if(i == N-2) {
+            if(!isPlus[i]) { //곱하기 일 경우
+                if(i != 0 && isPlus[i-1]) continue; //첫번째가 아니고, 이전 연산이 + 인 경우 이미 리스트에 넣었기 때문에 continue
+                if(i == N-2) { //끝이면 리스트에 값 마지막 값과 함께 리스트에 넣어줌
                     list.add(calcs[i]);
                     list.add(calcs[i+1]);
                 }
-                if((i!=N-2 && !isPlus[i+1])) {
+                if(i!=N-2) { //끝이아니면
                     list.add(calcs[i]);
                 }
             }

@@ -16,7 +16,7 @@ class Solution {
             q2.offer(queue2[i]);
         }
         
-        while(3*sizeQ >= answer) { //3*큐사이즈 까지 합이 안같아지면 -1 반환
+        while(3*sizeQ >= answer) { //3*큐사이즈 까지 합이 안같아지면 -1 반환(기존 위치에서 옮겨가고, 그 값이 다시 오기까지 최대 횟수)
             if(sum1 == sum2) {
                 return answer;
             }

@@ -14,7 +14,7 @@ class Solution {
             String cur = cities[i].toUpperCase();
             
             if(map.size() < cacheSize) { //맵에 들어있는 개수가 캐시 사이즈보다 작은 경우 -> map과 pq에 넣기
-                if(map.containsKey(cur)) {
+                if(map.containsKey(cur)) { //이미 들어있는 값이면 +1만해줌
                     answer +=1;
                     map.put(cur,i);
                     pq.offer(new City(cur,i));
@@ -47,9 +47,7 @@ class Solution {
             }
             
         }
-        
-        
-        
+
         return answer;
     }
     static class City implements Comparable<City>{

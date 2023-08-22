@@ -39,24 +39,24 @@ class Solution {
             }
         }
         
-        int anum = 0;
-        int bnum = 0;
+        int aNum = 0;
+        int bNum = 0;
         int n = 0; //교집합 개수
         
         for(String key : map1.keySet()) {
-            anum += map1.get(key);
+            aNum += map1.get(key);
             if(map2.containsKey(key)) { //b에 키 값이 있으면
                 n += Math.min(map1.get(key), map2.get(key));
             }
         }
         for(String key : map2.keySet()) {
-            bnum += map2.get(key);
+            bNum += map2.get(key);
         }
         
-        if(anum==0 && bnum==0) {
+        if(aNum==0 && bNum==0) {
             return 65536;
         }else {
-            return (65536 * (n) / (anum+bnum-n));
+            return (65536 * (n) / (aNum+bNum-n));
         }
         
     }

@@ -1,22 +1,14 @@
 import java.util.*;
 
 class Solution {
-    static int[] dr = {-1, 0, 1, 0};
-    static int[] dc = {0, 1, 0, -1};
     static int answer = 0;
     static int[][] pan;
     static int[][] pancopy;
     static int[][] visit;
-    static boolean[][] visited;
-    static Queue<int[]> q;
-    static int M,N;
     public int solution(int m, int n, String[] board) {
 
         //R-1, M-2, A-3, F-4, N-5, T-6, J-7, C-8
         pan = new int[m][n];
-        
-        M = m;
-        N = n;
         
         for(int i = 0; i < m; i++) {
             String str = board[i];

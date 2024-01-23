@@ -3,44 +3,39 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int N;
-	static int[] nums;
-	static int min;
-	static int left,right;
-	static int resultl,resultr;
-	public static void main(String[] args) throws Exception{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		N = Integer.parseInt(br.readLine());
-		nums = new int[N];
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < N; i++) {
-			nums[i] = Integer.parseInt(st.nextToken());
-		}
-		min = Integer.MAX_VALUE;
-		left = 0;
-		right = N-1;
-		
-		while(left<right) {
-			int sum = nums[left]+nums[right];
-			if(sum == 0) {
-				System.out.println(nums[left]+" "+nums[right]);
-				return;
-			}
-			
-			if(Math.abs(sum) < min) { //차이가 더 작다면
-				min = Math.abs(sum);
-				resultl = nums[left];
-				resultr = nums[right];
-			}
-			
-			if(sum < 0) {
-				left++;
-			}else {
-				right--;
-			}
-		}
-		System.out.println(resultl+" "+resultr);
+    public static void main(String[] args) throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        int[] nums = new int[N];
 
-	}
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            nums[i] = Integer.parseInt(st.nextToken());
+        }
 
+        int startPoint = 0;
+        int endPoint = N-1;
+
+        int diff = Integer.MAX_VALUE;
+        int answer1 = 0;
+        int answer2 = N-1;
+
+        while(startPoint < endPoint) {
+            int sum = nums[startPoint] + nums[endPoint];
+
+            if(Math.abs(sum) < diff) {
+                answer1 = startPoint;
+                answer2 = endPoint;
+                diff = Math.abs(sum);
+            }
+            if(sum < 0) {
+                startPoint++;
+            }else {
+                endPoint--;
+            }
+        }
+
+        System.out.println(nums[answer1] +" "+nums[answer2]);
+
+    }
 }

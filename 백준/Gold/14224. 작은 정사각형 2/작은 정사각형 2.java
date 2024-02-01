@@ -22,12 +22,6 @@ public class Main {
             location[i][1] = Long.parseLong(st.nextToken());
         }
 
-        //x축 오름차순으로 정렬, 같을 시 y축도 오름차순으로 정렬
-        Arrays.sort(location, (a,b) -> {
-            if(a[0] == b[0]) return Long.compare(a[1],b[1]);
-            else return Long.compare(a[0],b[0]);
-        });
-
 
         //이분탐색 - 정사각형 한 변의 길이 기준
         long start = 2;

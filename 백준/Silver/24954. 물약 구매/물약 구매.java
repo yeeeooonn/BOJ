@@ -47,38 +47,35 @@ public class Main {
 
         }
 
-        perm(0); //순열
+        perm(0, 0, price); //순서 시작
 
         System.out.println(answer);
 
 
     }
 
-    static void perm(int depth) {
+    static void perm(int depth, int count, int[] price) {
         if(depth == N) {
-            int count = 0;
-            priceCopy = new int[N];
-            System.arraycopy(price, 0, priceCopy, 0, N);
-
-            for (int i = 0; i < N; i++) {
-                count += priceCopy[select[i]];
-                //할인 적용
-                for (int j = 0; j < discount[select[i]].size(); j++) {
-                    D d = discount[select[i]].get(j);
-                    priceCopy[d.target] = Math.max(1, priceCopy[d.target] - d.discount);
-                }
-
-            }
             answer = Math.min(answer, count);
-
             return;
         }
         for (int i = 0; i < N; i++) {
             if(check[i]) continue;
             check[i] = true;
-            select[depth] = i;
-            perm(depth+1);
-            select[depth] = 0;
+            int p = price[i];
+//            if(count+p > answer) return;
+
+            priceCopy = new int[N];
+            System.arraycopy(price, 0, priceCopy, 0, N);
+
+            //할인 시키기
+            for (int j = 0; j < discount[i].size(); j++) {
+                D d = discount[i].get(j);
+                priceCopy[d.target] = Math.max(1, priceCopy[d.target] - d.discount);
+            }
+
+            perm(depth+1, count+p, priceCopy);
+
             check[i] = false;
         }
 

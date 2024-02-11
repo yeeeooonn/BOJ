@@ -59,11 +59,11 @@ public class Main {
             answer = Math.min(answer, count);
             return;
         }
+        if(count > answer) return;
         for (int i = 0; i < N; i++) {
             if(check[i]) continue;
             check[i] = true;
             int p = price[i];
-//            if(count+p > answer) return;
 
             priceCopy = new int[N];
             System.arraycopy(price, 0, priceCopy, 0, N);

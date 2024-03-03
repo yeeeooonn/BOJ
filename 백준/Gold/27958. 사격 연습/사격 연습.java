@@ -39,8 +39,8 @@ public class Main {
 
     }
     static void shoot(int depth, int row, int score, int[][] board, int[][] first) {
+        result = Math.max(result, score);
         if(depth == K) {
-            result = Math.max(result, score);
             return;
         }
         int[][] tmpBoard = new int[N][N];
@@ -83,13 +83,12 @@ public class Main {
                     //그것도아니면 현재보드 점수만 깎음
                     tmpBoard[row][i] -= attack[depth];
                 }
+                //다음 공격 진행
+                for (int j = 0; j < N; j++) {
+                    shoot(depth+1, j, score, tmpBoard, tmpFirst); //몇번째 공격인지, 몇번째 줄 인지, 현재 점수, 현재 보드 상태, 현재 초기 보드판 상태
+                }
                 break;
             }
-        }
-
-        //다음 공격 진행
-        for (int j = 0; j < N; j++) {
-            shoot(depth+1, j, score, tmpBoard, tmpFirst); //몇번째 공격인지, 몇번째 줄 인지, 현재 점수, 현재 보드 상태, 현재 초기 보드판 상태
         }
 
     }

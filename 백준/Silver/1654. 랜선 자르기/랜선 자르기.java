@@ -30,12 +30,12 @@ public class Main {
             if(count >= N) {
                 //N개 이상이면 길이 늘리기
                 start = mid+1;
-            }else if(count < N){
+            }else{
                 end = mid-1;
             }
         }
 
-        System.out.print(end);
+        System.out.print(start-1);
 
     }
     static long check(long num) {

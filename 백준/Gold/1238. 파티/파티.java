@@ -7,11 +7,15 @@ import java.util.StringTokenizer;
 public class Main {
     static int N,M,X;
     static int answer;
-    static int distanceX[];
+
 
     static int distance[];
+
+    static int distance1[];
+    static int distance2[];
     static boolean check[];
-    static List<Edge> list[];
+    static List<Edge> list1[];
+    static List<Edge> list2[];
     static class Edge implements Comparable<Edge> {
         int e;
         int w;
@@ -31,9 +35,11 @@ public class Main {
         M = Integer.parseInt(st.nextToken());
         X = Integer.parseInt(st.nextToken());
 
-        list = new ArrayList[N+1];
+        list1 = new ArrayList[N+1];
+        list2 = new ArrayList[N+1];
         for (int i = 1; i <= N; i++) {
-            list[i] = new ArrayList<>();
+            list1[i] = new ArrayList<>();
+            list2[i] = new ArrayList<>();
         }
 
         for (int i = 0; i < M; i++) {
@@ -41,25 +47,24 @@ public class Main {
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
             int w = Integer.parseInt(st.nextToken());
-            list[s].add(new Edge(e,w));
+            list1[s].add(new Edge(e,w));
+            list2[e].add(new Edge(s,w));
         }
 
-
-
-        distanceX = new int[N+1]; //X ->i 까지의 최소거리
-        dijkstra(X, -1);
+        distance1 = dijkstra(X,list1); //X -> i로 가는 거리 계산
+        distance2 = dijkstra(X,list2); //i -> X로 가는 거리 계산
 
 
         answer = 0;
         for (int i = 1; i <= N; i++) {
             if(i == X) continue;
-            answer = Math.max(answer, dijkstra(i, X) + distanceX[i]);
+            answer = Math.max(answer, distance1[i] + distance2[i]);
         }
 
         System.out.println(answer);
 
     }
-    static int dijkstra (int start, int end) {
+    static int[] dijkstra (int start, List<Edge>[] list) {
 
         distance = new int[N+1];
         check = new boolean[N+1];
@@ -84,14 +89,6 @@ public class Main {
 
         }
 
-        if(end == -1) {
-            for (int i = 1; i <= N; i++) {
-                distanceX[i] = distance[i];
-            }
-
-            return 0;
-        }
-
-        return distance[end];
+        return distance;
     }
 }
